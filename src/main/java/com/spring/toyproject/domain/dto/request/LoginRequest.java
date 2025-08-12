@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/*
-    믈라이언트가 보낸 로그인 정보를 담는 DTO
+/**
+ * 클라이언트가 보낸 로그인 정보를 담는 DTO
  */
 @Getter
 @NoArgsConstructor
@@ -20,6 +20,5 @@ public class LoginRequest {
 
     @NotBlank(message = "비밀번호는 필수입니다.")
     private String password;
-
 
 }
