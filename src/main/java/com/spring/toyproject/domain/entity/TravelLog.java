@@ -7,6 +7,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 여행일지 엔티티
@@ -58,9 +60,9 @@ public class TravelLog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trip_id", nullable = false)
     private Trip trip;
-//
-//    @OneToMany(mappedBy = "travelLog", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<TravelLogTag> travelLogTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "travelLog", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TravelLogTag> travelLogTags = new ArrayList<>();
 
     @Builder
     public TravelLog(Trip trip, String title, String content, LocalDate logDate,
@@ -88,14 +90,14 @@ public class TravelLog {
     }
 
 
-//    // 태그 관련 편의 메서드
-//    public void addTag(Tag tag) {
-//        TravelLogTag travelLogTag = TravelLogTag.builder()
-//                .travelLog(this)
-//                .tag(tag)
-//                .build();
-//        travelLogTags.add(travelLogTag);
-//    }
+    // 태그 관련 편의 메서드
+    public void addTag(Tag tag) {
+        TravelLogTag travelLogTag = TravelLogTag.builder()
+                .travelLog(this)
+                .tag(tag)
+                .build();
+        travelLogTags.add(travelLogTag);
+    }
 
 
 }
