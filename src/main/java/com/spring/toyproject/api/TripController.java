@@ -3,6 +3,7 @@ package com.spring.toyproject.api;
 import com.spring.toyproject.domain.dto.common.ApiResponse;
 import com.spring.toyproject.domain.dto.request.TripRequest;
 import com.spring.toyproject.domain.dto.request.TripSearchRequestDto;
+import com.spring.toyproject.domain.dto.response.TripDetailDto;
 import com.spring.toyproject.domain.dto.response.TripListItemDto;
 import com.spring.toyproject.domain.entity.Trip;
 import com.spring.toyproject.repository.custom.TripRepositoryCustom;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -66,6 +68,26 @@ public class TripController {
         Page<TripListItemDto> trips = tripService.getUserTripsList(username, condition, pageable);
 
         return ResponseEntity.ok(ApiResponse.success("여행 정보 목록이 조회되었습니다.", trips));
+    }
+
+    /**
+     * 여행 단건 조회 API
+     * GET /api/trips/{tripId}
+     */
+    @GetMapping("/{tripId}")
+    public ResponseEntity<?> getTrip(
+            @PathVariable Long tripId
+            , @AuthenticationPrincipal String username
+    ) {
+
+        log.info("여행 단건 조회 API 호출 - 사용자: {}, 여행 ID: {}"
+                , username, tripId);
+
+        TripDetailDto trip = tripService.getTrip(username, tripId);
+
+        return ResponseEntity.ok().body(
+                ApiResponse.success("여행(id: %s) 단일 조회되었습니다.".formatted(tripId), trip)
+        );
     }
 
 }

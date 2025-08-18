@@ -14,4 +14,6 @@ public interface TripRepository extends JpaRepository<Trip, Long>, TripRepositor
 
     // 사용자별 여행 ID로 조회 (보안을 위해 사용자 정보도 함께 확인)
     Optional<Trip> findByIdAndUser(Long id, User user);
+
+    User user(User user);
 }

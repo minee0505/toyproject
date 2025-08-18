@@ -1,4 +1,4 @@
-import { authService } from './utils/auth.js';
+ import { authService } from './utils/auth.js';
 import { PAGE_CONFIG } from './config/routes-config.js';
 import { showAlert } from './utils/common.js';
 
